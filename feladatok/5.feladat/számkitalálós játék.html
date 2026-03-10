@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Számkitaláló Játék</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Számkitaláló Játék</h1>
+        <p>Gondoltam egy számra 0 és 1.000.000 között. 20 próbálkozásod van!</p>
+        <button onclick="inditJatek()">Játék indítása</button>
+    </div>
+
+    <script>
+        function inditJatek() {
+            // Véletlenszám generálása 0 és 1.000.000 között
+            const celSzam = Math.floor(Math.random() * 1000001);
+            const maxProbalkozas = 20;
+            let tippekSzama = 0;
+            let talalt = false;
+
+            while (tippekSzama < maxProbalkozas && !talalt) {
+                tippekSzama++;
+                
+                let bemenet = prompt(`Kérlek add meg a(z) ${tippekSzama}. tippedet (0 - 1.000.000 között):`);
+                
+                // Ha a felhasználó a Mégse gombra kattint
+                if (bemenet === null) break;
+
+                let tipp = parseInt(bemenet);
+
+                // Ellenőrzés, hogy a megadott érték szám-e
+                if (isNaN(tipp)) {
+                    alert("Ez nem egy érvényes szám! Ez a kör most elveszett.");
+                    continue;
+                }
+
+                // A tipp kiértékelése a kért üzenetekkel
+                if (tipp === celSzam) {
+                    alert(`Gratulálok, ${tippekSzama} lépésből eltaláltad!`);
+                    talalt = true;
+                } else if (tipp > celSzam) {
+                    alert(`${tippekSzama}. tipp nem talált: A megoldás kisebb.`);
+                } else {
+                    alert(`${tippekSzama}. tipp nem talált: A megoldás nagyobb.`);
+                }
+            }
+
+            // Ha elfogytak a lehetőségek
+            if (!talalt && tippekSzama >= maxProbalkozas) {
+                alert(`Sajnos ez most nem sikerült! A megoldás: ${celSzam}`);
+            }
+        }
+    </script>
+</body>
+</html>
